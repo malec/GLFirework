@@ -86,11 +86,8 @@ void makeFireWorkStartingPointArray(Coordinate *array, int count) {
 	const double SCREEN_WIDTH = 2.0;
 	const float START = -1.0;
 	for (int i = 0; i < count; i++) {
-		float width = (SCREEN_WIDTH - count / SCREEN_WIDTH);
-		if (width < 0) {
-			width = width * START;
-		}
-		array[i] = Coordinate(width*i - width, 0, 0);
+		float width = (SCREEN_WIDTH / (count + 1));
+		array[i] = Coordinate((i + 1)*width - 1, (i%2 == 1 ? 1.0/3.0 : 2.0/3.0), 0);
 	}
 }
 
