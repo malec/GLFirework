@@ -72,7 +72,7 @@ public: Coordinate to, from;
 			from = _from;
 		}
 		void draw(Color color) {
-			glLineWidth(2);
+			glLineWidth(2.0);
 			glColor3f(color.R, color.G, color.B);
 			glBegin(GL_LINES);
 			glVertex3f(from.x, from.y, from.z);
