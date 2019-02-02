@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(500, 500);
 	glutInitWindowPosition(250, 250);
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-	glutCreateWindow("Line");
+	glutCreateWindow("Fireworks");
 	glutDisplayFunc(display);
 	glutMainLoop();
 
