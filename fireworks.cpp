@@ -30,6 +30,11 @@ public:
 		G = getRandomColor();
 		B = getRandomColor();
 	}
+	Color(float _R, float _G, float _B) {
+		R = _R;
+		G = _G;
+		B = _B;
+	}
 	static float getRandomColor()
 	{
 		return rand() / (float)RAND_MAX;
