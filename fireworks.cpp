@@ -21,7 +21,6 @@ using namespace std;
 float X[SIZE + 1];
 float Y[SIZE + 1];
 
-
 class Color {
 public:
 	float R, G, B;
@@ -87,7 +86,7 @@ void makeFireWorkStartingPointArray(Coordinate *array, int count) {
 	const float START = -1.0;
 	for (int i = 0; i < count; i++) {
 		float width = (SCREEN_WIDTH / (count + 1));
-		array[i] = Coordinate((i + 1)*width - 1, (i%2 == 1 ? 1.0/3.0 : 2.0/3.0), 0);
+		array[i] = Coordinate((i + 1)*width - 1, (i % 2 == 1 ? 1.0 / 3.0 : 2.0 / 3.0), 0);
 	}
 }
 
@@ -141,9 +140,6 @@ void init()
 	glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 }
 
-//---------------------------------------
-// Display callback for OpenGL
-//---------------------------------------
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -156,7 +152,7 @@ void display()
 	makeColorArray(colors, NUMBER_OF_FIREWORKS);
 
 	for (int i = 0; i < NUMBER_OF_FIREWORKS; i++) {
-		Color tempColor = Color(0,0,.5);
+		Color tempColor = Color(0, 0, .5);
 		Coordinate tempTo = Coordinate(coordinates[i].x, .6, 1);
 		LineSegment *tempLineSegment = new LineSegment(coordinates[i], tempTo);
 		tempLineSegment->draw(tempColor);
@@ -166,38 +162,6 @@ void display()
 	// foreach firework starting point, make line segments from the center to many directions with a specified length.
 	// compute the to position coordinate.
 	// draw. 
-
-	//// Draw red line
-	//glBegin(GL_LINE_STRIP);
-	//glColor3f(1.0, 0.0, 0.0);
-	//X[0] = -0.5;
-	//Y[0] = -0.5;
-	//X[SIZE] = 0.5;
-	//Y[SIZE] = 0.5;
-	//split(0, SIZE, 1);
-	//for (i = 0; i <= SIZE; i++)
-	//	glVertex2f(X[i], Y[i]);
-	//glEnd();
-
-	// Draw green line
-	/*glColor3f(0.0, 1.0, 0.0);
-	glBegin(GL_LINE_STRIP);
-	X[0] = 0.5;
-	Y[0] = -0.5;
-	X[SIZE] = -0.5;
-	Y[SIZE] = 0.5;
-	split(0, SIZE, 5);
-	glVertex2f(X[2], Y[2]);
-	glVertex2f(X[30], Y[30]);*/
-	// for (i = 0; i <= SIZE; i
-
-	/*glLineWidth(2.5);
-	glColor3f(1.0, 0.0, 0.0);
-	glBegin(GL_LINES);
-	glVertex3f(0.0, 0.0, 0.0);
-	glVertex3f(15, 0, 0);
-	glEnd();
-	glFlush();*/
 }
 
 int main(int argc, char *argv[])
