@@ -159,8 +159,8 @@ void display()
 	makeColorArray(colors, NUMBER_OF_FIREWORKS);
 
 	for (int i = 0; i < NUMBER_OF_FIREWORKS; i++) {
-		Color tempColor = Color();
-		Coordinate tempTo = Coordinate(1, 1, 1);
+		Color tempColor = Color(0,0,.5);
+		Coordinate tempTo = Coordinate(coordinates[i].x, .6, 1);
 		LineSegment *tempLineSegment = new LineSegment(coordinates[i], tempTo);
 		tempLineSegment->draw(tempColor);
 		delete tempLineSegment;
