@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-#include <array>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,13 +83,13 @@ public: Coordinate to, from;
 
 class Firework {
 private:
-	list<LineSegment> lineSegments;
+	vector<LineSegment> lineSegments;
 public:
 	const Color color = Color(0.87451, 0.61961, 0.20392);
 	float RADIUS = 0.25;
 	float PI = acos(-1);
 	Firework(Coordinate from) {
-		int LINE_SEGMENTS_PER_FIREWORK = 15;
+		int LINE_SEGMENTS_PER_FIREWORK = 12;
 		float phiIncrement = PI / LINE_SEGMENTS_PER_FIREWORK;
 		float thetaIncrement = 2 * PI / LINE_SEGMENTS_PER_FIREWORK;
 		for (float phi = 0; phi < PI; phi += phiIncrement) {
@@ -108,8 +107,8 @@ public:
 		}
 	}
 	void drawFirework() {
-		for (auto it = lineSegments.begin(); it != lineSegments.end(); it++) {
-			it->draw(color);
+		for (int i = 0; i < lineSegments.size(); i++) {
+			lineSegments[i].draw(color);
 		}
 	}
 };
@@ -153,7 +152,6 @@ Coordinate coordinates[3] = { Coordinate(-.5, .5, 0), Coordinate(0, -.5, 0), Coo
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	cout << "update" << endl;
 	for (int i = 0; i < 3; i++) {
 		fireworks[i]->drawFirework();
 	}
@@ -161,8 +159,8 @@ void display()
 }
 
 void cleanUp() {
-	for (auto it = fireworks.begin(); it != fireworks.end(); it++) {
-		delete &it;
+	for (int i = 0; i < fireworks.size(); i++) {
+		delete fireworks[i];
 	}
 }
 
