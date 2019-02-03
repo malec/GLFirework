@@ -19,9 +19,11 @@
 #endif
 using namespace std;
 
-#define SIZE 32
-float X[SIZE + 1];
-float Y[SIZE + 1];
+#define NUMBER_OF_FIREWORKS 3
+float getRandomColor()
+{
+	return rand() / (float)RAND_MAX;
+}
 
 class Color {
 public:
@@ -36,11 +38,8 @@ public:
 		G = _G;
 		B = _B;
 	}
-	static float getRandomColor()
-	{
-		return rand() / (float)RAND_MAX;
-	}
 };
+
 
 class Coordinate {
 public:
@@ -73,7 +72,7 @@ public: Coordinate to, from;
 			from = _from;
 		}
 		void draw(Color color) {
-			glLineWidth(3.0);
+			glLineWidth(1.0);
 			glColor3f(color.R, color.G, color.B);
 			glBegin(GL_LINES);
 			glVertex3f(from.x, from.y, from.z);
@@ -87,7 +86,7 @@ class Firework {
 private:
 	list<LineSegment> lineSegments;
 public:
-	const Color color = Color(0.87451, 0.41961, 0.00392);;
+	const Color color = Color(0.87451, 0.41961, 0.00392);
 	float RADIUS = 0.25;
 	float PI = acos(-1);
 	Firework(Coordinate from) {
@@ -105,8 +104,7 @@ public:
 		}
 	}
 	void drawFirework() {
-		// iterator<forward_iterator_tag,LineSegment> lineSegmentIterator = lineSegments.begin();
-		for (list<LineSegment>::iterator it = lineSegments.begin(); it != lineSegments.end(); ++it) {
+		for (auto it = lineSegments.begin(); it != lineSegments.end(); it++) {
 			it->draw(color);
 		}
 	}
@@ -135,30 +133,6 @@ float myrand(float R)
 }
 
 //---------------------------------------
-// Recursive function to split lines
-//---------------------------------------
-void split(int low, int high, float radius)
-{
-	// Check terminating condition
-	if ((high - low) > 1)
-	{
-		// Calculate length of line segment
-		float dx = X[high] - X[low];
-		float dy = Y[high] - Y[low];
-		float length = sqrt(dx * dx + dy * dy) / radius;
-
-		// Generate midpoint with random displacement
-		int mid = (high + low) / 2;
-		X[mid] = (X[high] + X[low]) / 2 + myrand(length);
-		Y[mid] = (Y[high] + Y[low]) / 2 + myrand(length);
-
-		// Perform recursive calls
-		split(low, mid, radius);
-		split(mid, high, radius);
-	}
-}
-
-//---------------------------------------
 // Init function for OpenGL
 //---------------------------------------
 void init()
@@ -170,18 +144,21 @@ void init()
 	glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 }
 
+vector<Firework*> fireworks;
+Coordinate coordinates[3] = { Coordinate(-.5, .5, 0), Coordinate(0, -.5, 0), Coordinate(.5, 0, 0) };
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	const int NUMBER_OF_FIREWORKS = 3;
-	vector<Coordinate> origin;
-	origin.push_back(Coordinate(-.5, .5, 0));
-	origin.push_back(Coordinate(0, -.5, 0));
-	origin.push_back(Coordinate(.5, 0, 0));
-	vector<Firework> firework;
-	for(int i = 0; i < NUMBER_OF_FIREWORKS; i++) {
-		Firework *firework = new Firework(origin[i]);
-		firework->drawFirework();
+	cout << "update" << endl;
+	for (int i = 0; i < 3; i++) {
+		fireworks[i]->drawFirework();
+	}
+	glutSwapBuffers();
+}
+
+void cleanUp() {
+	for (auto it = fireworks.begin(); it != fireworks.end(); it++) {
+		delete &it;
 	}
 }
 
@@ -193,8 +170,10 @@ int main(int argc, char *argv[])
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
 	glutCreateWindow("Fireworks");
 	glutDisplayFunc(display);
+	for (int i = 0; i < NUMBER_OF_FIREWORKS; i++) {
+		fireworks.push_back(new Firework(coordinates[i]));
+	}
 	glutMainLoop();
-
-	getchar();
+	cleanUp();
 	return 0;
 }
