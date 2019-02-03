@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <list>
 #ifdef MAC
 #include <GLUT/glut.h>
 #else
@@ -71,7 +72,7 @@ public: Coordinate to, from;
 			from = _from;
 		}
 		void draw(Color color) {
-			glLineWidth(2.0);
+			glLineWidth(3.0);
 			glColor3f(color.R, color.G, color.B);
 			glBegin(GL_LINES);
 			glVertex3f(from.x, from.y, from.z);
@@ -81,6 +82,34 @@ public: Coordinate to, from;
 		}
 };
 
+class FireWork {
+private:
+	list<LineSegment> lineSegments;
+public:
+	const Color color = Color(0.87451, 0.41961, 0.00392);;
+	float RADIUS = 0.25;
+	float PI = acos(-1);
+	FireWork(Coordinate from) {
+	int LINE_SEGMENTS_PER_FIREWORK = 20;
+		float phiIncrement = PI / LINE_SEGMENTS_PER_FIREWORK;
+		float thetaIncrement = 2 * PI / LINE_SEGMENTS_PER_FIREWORK;
+		for (float phi = 0; phi < PI; phi += phiIncrement) {
+			for (float theta = 0; theta < 2 * PI; theta += thetaIncrement) {
+				double x = from.x + RADIUS * sin(phi) * cos(theta);
+				double y = from.y + RADIUS * sin(phi) * sin(theta);
+				double z = from.z + RADIUS * cos(phi);
+				Coordinate to = Coordinate(x,y,z);
+				lineSegments.push_back(LineSegment(from, to));
+			}
+		}
+	}
+	void drawFireworks() {
+		// iterator<forward_iterator_tag,LineSegment> lineSegmentIterator = lineSegments.begin();
+		for (std::list<LineSegment>::iterator it = lineSegments.begin(); it != lineSegments.end(); ++it) {
+			it->draw(color);
+		}
+	}
+};
 void makeFireWorkStartingPointArray(Coordinate *array, int count) {
 	const double SCREEN_WIDTH = 2.0;
 	const float START = -1.0;
