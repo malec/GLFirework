@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <list>
+#include <vector>
 #ifdef MAC
 #include <GLUT/glut.h>
 #else
@@ -82,15 +83,15 @@ public: Coordinate to, from;
 		}
 };
 
-class FireWork {
+class Firework {
 private:
 	list<LineSegment> lineSegments;
 public:
 	const Color color = Color(0.87451, 0.41961, 0.00392);;
 	float RADIUS = 0.25;
 	float PI = acos(-1);
-	FireWork(Coordinate from) {
-	int LINE_SEGMENTS_PER_FIREWORK = 20;
+	Firework(Coordinate from) {
+		int LINE_SEGMENTS_PER_FIREWORK = 20;
 		float phiIncrement = PI / LINE_SEGMENTS_PER_FIREWORK;
 		float thetaIncrement = 2 * PI / LINE_SEGMENTS_PER_FIREWORK;
 		for (float phi = 0; phi < PI; phi += phiIncrement) {
@@ -98,14 +99,14 @@ public:
 				double x = from.x + RADIUS * sin(phi) * cos(theta);
 				double y = from.y + RADIUS * sin(phi) * sin(theta);
 				double z = from.z + RADIUS * cos(phi);
-				Coordinate to = Coordinate(x,y,z);
+				Coordinate to = Coordinate(x, y, z);
 				lineSegments.push_back(LineSegment(from, to));
 			}
 		}
 	}
-	void drawFireworks() {
+	void drawFirework() {
 		// iterator<forward_iterator_tag,LineSegment> lineSegmentIterator = lineSegments.begin();
-		for (std::list<LineSegment>::iterator it = lineSegments.begin(); it != lineSegments.end(); ++it) {
+		for (list<LineSegment>::iterator it = lineSegments.begin(); it != lineSegments.end(); ++it) {
 			it->draw(color);
 		}
 	}
@@ -172,25 +173,16 @@ void init()
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
 	const int NUMBER_OF_FIREWORKS = 3;
-	Coordinate coordinates[NUMBER_OF_FIREWORKS] = {};
-	makeFireWorkStartingPointArray(coordinates, NUMBER_OF_FIREWORKS);
-
-	Color colors[NUMBER_OF_FIREWORKS] = {};
-	makeColorArray(colors, NUMBER_OF_FIREWORKS);
-
-	for (int i = 0; i < NUMBER_OF_FIREWORKS; i++) {
-		Color tempColor = Color(0, 0, .5);
-		Coordinate tempTo = Coordinate(coordinates[i].x, .6, 1);
-		LineSegment *tempLineSegment = new LineSegment(coordinates[i], tempTo);
-		tempLineSegment->draw(tempColor);
-		delete tempLineSegment;
+	vector<Coordinate> origin;
+	origin.push_back(Coordinate(-.5, .5, 0));
+	origin.push_back(Coordinate(0, -.5, 0));
+	origin.push_back(Coordinate(.5, 0, 0));
+	vector<Firework> firework;
+	for(int i = 0; i < NUMBER_OF_FIREWORKS; i++) {
+		Firework *firework = new Firework(origin[i]);
+		firework->drawFirework();
 	}
-
-	// foreach firework starting point, make line segments from the center to many directions with a specified length.
-	// compute the to position coordinate.
-	// draw. 
 }
 
 int main(int argc, char *argv[])
