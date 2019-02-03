@@ -20,7 +20,7 @@
 using namespace std;
 
 #define NUMBER_OF_FIREWORKS 3
-float getRandomColor()
+float getRandomFloat()
 {
 	return rand() / (float)RAND_MAX;
 }
@@ -29,9 +29,9 @@ class Color {
 public:
 	float R, G, B;
 	Color() {
-		R = getRandomColor();
-		G = getRandomColor();
-		B = getRandomColor();
+		R = getRandomFloat();
+		G = getRandomFloat();
+		B = getRandomFloat();
 	}
 	Color(float _R, float _G, float _B) {
 		R = _R;
@@ -95,9 +95,9 @@ public:
 		float thetaIncrement = 2 * PI / LINE_SEGMENTS_PER_FIREWORK;
 		for (float phi = 0; phi < PI; phi += phiIncrement) {
 			for (float theta = 0; theta < 2 * PI; theta += thetaIncrement) {
-				double x = from.x + RADIUS * sin(phi) * cos(theta);
-				double y = from.y + RADIUS * sin(phi) * sin(theta);
-				double z = from.z + RADIUS * cos(phi);
+				double x = (from.x + (RADIUS + getRandomFloat() / 10) * sin(phi) * cos(theta));
+				double y = (from.y + (RADIUS + getRandomFloat() / 10) * sin(phi) * sin(theta));
+				double z = (from.z + (RADIUS + getRandomFloat() / 10) * cos(phi));
 				Coordinate to = Coordinate(x, y, z);
 				lineSegments.push_back(LineSegment(from, to));
 			}
