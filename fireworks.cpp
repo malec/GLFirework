@@ -86,18 +86,22 @@ class Firework {
 private:
 	list<LineSegment> lineSegments;
 public:
-	const Color color = Color(0.87451, 0.41961, 0.00392);
+	const Color color = Color(0.87451, 0.61961, 0.20392);
 	float RADIUS = 0.25;
 	float PI = acos(-1);
 	Firework(Coordinate from) {
-		int LINE_SEGMENTS_PER_FIREWORK = 20;
+		int LINE_SEGMENTS_PER_FIREWORK = 15;
 		float phiIncrement = PI / LINE_SEGMENTS_PER_FIREWORK;
 		float thetaIncrement = 2 * PI / LINE_SEGMENTS_PER_FIREWORK;
 		for (float phi = 0; phi < PI; phi += phiIncrement) {
 			for (float theta = 0; theta < 2 * PI; theta += thetaIncrement) {
-				double x = (from.x + (RADIUS + getRandomFloat() / 10) * sin(phi) * cos(theta));
-				double y = (from.y + (RADIUS + getRandomFloat() / 10) * sin(phi) * sin(theta));
-				double z = (from.z + (RADIUS + getRandomFloat() / 10) * cos(phi));
+				float phiRandomIncrement = getRandomFloat();
+				float thetaRandomIncrement = getRandomFloat();
+				phiRandomIncrement *= rand() % 2 == 0 ? -1 : 1;
+				thetaRandomIncrement *= rand() % 2 == 0 ? -1 : 1;
+				double x = (from.x + (RADIUS + getRandomFloat() / 10) * sin(phi + phiRandomIncrement) * cos(theta + thetaRandomIncrement));
+				double y = (from.y + (RADIUS + getRandomFloat() / 10) * sin(phi + phiRandomIncrement) * sin(theta + thetaRandomIncrement));
+				double z = (from.z + (RADIUS + getRandomFloat() / 10) * cos(phi + phiRandomIncrement));
 				Coordinate to = Coordinate(x, y, z);
 				lineSegments.push_back(LineSegment(from, to));
 			}
