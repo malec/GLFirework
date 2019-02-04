@@ -166,6 +166,7 @@ void cleanUp() {
 
 int main(int argc, char *argv[])
 {
+	srand (time(NULL));
 	glutInit(&argc, argv);
 	glutInitWindowSize(500, 500);
 	glutInitWindowPosition(250, 250);
