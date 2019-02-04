@@ -140,7 +140,6 @@ void display()
 	for (int i = 0; i < 3; i++) {
 		fireworks[i]->drawFirework();
 	}
-	glutSwapBuffers();
 }
 
 void cleanUp() {
