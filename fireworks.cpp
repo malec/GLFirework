@@ -112,20 +112,6 @@ public:
     glFlush();
   }
 };
-void makeFireWorkStartingPointArray(vector<Coordinate> *array, int count) {
-	const double SCREEN_WIDTH = 2.0;
-	const float START = -1.0;
-	for (int i = 0; i < count; i++) {
-		float width = (SCREEN_WIDTH / (count + 1));
-		array->push_back(Coordinate((i + 1)*width - 1, (i % 2 == 1 ? 0.5 / 3.0 : 2.0 / 3.0), 0));
-	}
-}
-
-void makeColorArray(Color *colorArray, int count) {
-	for (int i = 0; i < count; i++) {
-		colorArray[i] = Color();
-	}
-}
 
 //---------------------------------------
 // Calculate random value between [-R..R]
@@ -172,8 +158,7 @@ int main(int argc, char *argv[])
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
 	glutCreateWindow("Fireworks");
 	glutDisplayFunc(display);
-	vector<Coordinate> coordinates;
-	makeFireWorkStartingPointArray(&coordinates, NUMBER_OF_FIREWORKS);
+	Coordinate coordinates[NUMBER_OF_FIREWORKS] = { Coordinate(-.5, .5, 0), Coordinate(0, -.5, 0), Coordinate(.5, 0, 0) };
 	for (int i = 0; i < NUMBER_OF_FIREWORKS; i++) {
 		fireworks.push_back(new Firework(coordinates[i]));
 	}
