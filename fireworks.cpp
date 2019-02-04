@@ -71,13 +71,8 @@ public: Coordinate to, from;
 			from = _from;
 		}
 		void draw(Color color) {
-			glLineWidth(1.0);
-			glColor3f(color.R, color.G, color.B);
-			glBegin(GL_LINES);
 			glVertex3f(from.x, from.y, from.z);
-			glVertex3f(to.x, to.y, to.z);
-			glEnd();
-			glFlush();
+			glVertex3f(to.x, to.y, to.z);      
 		}
 };
 
@@ -107,10 +102,15 @@ public:
 		}
 	}
 	void drawFirework() {
+    glLineWidth(1.0);
+    glColor3f(color.R, color.G, color.B);
+    glBegin(GL_LINES);
 		for (int i = 0; i < lineSegments.size(); i++) {
 			lineSegments[i].draw(color);
 		}
-	}
+    glEnd();
+    glFlush();
+  }
 };
 void makeFireWorkStartingPointArray(Coordinate *array, int count) {
 	const double SCREEN_WIDTH = 2.0;
