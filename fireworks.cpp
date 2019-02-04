@@ -70,7 +70,7 @@ public: Coordinate to, from;
 			to = _to;
 			from = _from;
 		}
-		void draw(Color color) {
+		void drawVertex(Color color) {
 			glVertex3f(from.x, from.y, from.z);
 			glVertex3f(to.x, to.y, to.z);      
 		}
@@ -106,7 +106,7 @@ public:
     glColor3f(color.R, color.G, color.B);
     glBegin(GL_LINES);
 		for (int i = 0; i < lineSegments.size(); i++) {
-			lineSegments[i].draw(color);
+			lineSegments[i].drawVertex(color);
 		}
     glEnd();
     glFlush();
