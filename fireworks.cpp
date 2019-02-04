@@ -27,11 +27,6 @@ float getRandomFloat()
 class Color {
 public:
 	float R, G, B;
-	Color() {
-		R = getRandomFloat();
-		G = getRandomFloat();
-		B = getRandomFloat();
-	}
 	Color(float _R, float _G, float _B) {
 		R = _R;
 		G = _G;
@@ -50,17 +45,6 @@ public:
 		x = _x;
 		y = _y;
 		z = _z;
-	}
-	void randomizeCoordinates() {
-		x = getRandomStartingPoint();
-		y = getRandomStartingPoint();
-		z = getRandomStartingPoint();
-	}
-	static float getRandomStartingPoint()
-	{
-		const int MAX = 2;
-		const int MIN = 1;
-		return (rand() / (float)RAND_MAX * MAX) - MIN;
 	}
 };
 
@@ -113,20 +97,8 @@ public:
   }
 };
 
-//---------------------------------------
-// Calculate random value between [-R..R]
-//---------------------------------------
-float myrand(float R)
-{
-	return (2 * R * rand()) / RAND_MAX - R;
-}
-
-//---------------------------------------
-// Init function for OpenGL
-//---------------------------------------
 void init()
 {
-	// Initialize OpenGL
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
