@@ -4,6 +4,16 @@ Alexander Ahlbrandt
 
 UAID: 010726372
 
+## Running
+
+Make sure you have openGL. If not, run
+
+```sudo apt-get -y install mesa-common-dev freeglut3-dev```
+
+then run
+
+``` g++ fireworks.cpp -o fireworks -lGLU -l glut -lGL ```
+
 ## Problem Statement
 Written in C++, this simple program uses openGL to draw a static image of what a firework may look like after explosion. There is no input, no error handling, and no output (other than the window displaying the fireworks).
 
